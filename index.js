@@ -1,2 +1,2 @@
-const Printer = require('./Printer');
-module.exports = { Printer };
+import Printer from "./Printer"
+export default Printer
