@@ -86,21 +86,15 @@ class Printer {
     _formatStatus(status, add_info) {
         const success = status?.success
         if (success) {
-            const printerState = printerState[add_info.fpStatus?.substring(0, 1)]
-            const DGFE_MPD_State = DGFE_MPD_State[add_info.fpStatus?.substring(1, 2)]
-            const cashDrawerState = cashDrawerState[add_info.fpStatus?.substring(2, 3)]
-            const receiptDocumentState = receiptDocumentState[add_info.fpStatus?.substring(3, 4)]
-            const operativeState = operativeState[add_info.fpStatus?.substring(4, 5)]
-
             return {
                 code: status?.code,
                 success: status?.success,
                 message: status?.message,
-                printerState,
-                DGFE_MPD_State,
-                cashDrawerState,
-                receiptDocumentState,
-                operativeState
+                printerState: printerState[add_info.fpStatus?.substring(0, 1)],
+                DGFE_MPD_State: DGFE_MPD_State[add_info.fpStatus?.substring(1, 2)],
+                cashDrawerState: cashDrawerState[add_info.fpStatus?.substring(2, 3)],
+                receiptDocumentState: receiptDocumentState[add_info.fpStatus?.substring(3, 4)],
+                operativeState: operativeState[add_info.fpStatus?.substring(4, 5)]
             }
         }
 
