@@ -1,3 +1,5 @@
+import {printerState} from "./constants";
+
 const {ePOSBuilder, encodeBase64Binary, fiscalPrint} = require('./js/fiscalprint');
 const {XMLParser, XMLBuilder} = require('fast-xml-parser');
 
@@ -31,7 +33,20 @@ class Printer {
 
     getPrinterStatus(onError = null, onReceive = null) {
         const xmlData = this._getPrinterStatusXml();
-        this.sendToPrinter(xmlData, onError, onReceive);
+
+        const onStatusError = (result) => {
+            console.log("[PRINTER][CALLBACK] Errore durante la stampa: " + result);
+            const error = this._formatError(result);
+            if (onError) onError(error);
+        }
+
+        const onStatusReceive = (result, tag_names_array, add_info, res_add) => {
+            console.log("[PRINTER][CALLBACK] ", result, tag_names_array, add_info, res_add);
+            const status = this._formatStatus(result, add_info);
+            if (onReceive) onReceive(status);
+        }
+
+        this.sendToPrinter(xmlData, onStatusError, onStatusReceive);
     }
 
     _isValidXml(xmlData) {
@@ -58,6 +73,42 @@ class Printer {
         const builder = new XMLBuilder(options)
         console.log("[PRINTER] XML Stato: ", builder.build(statusObj));
         return builder.build(statusObj);
+    }
+
+    _formatError(error) {
+        return {
+            code: error?.code,
+            success: error?.success,
+            message: error?.message
+        }
+    }
+
+    _formatStatus(status, add_info) {
+        const success = status?.success
+        if (success) {
+            const printerState = printerState[add_info.fpStatus?.substring(0, 1)]
+            const DGFE_MPD_State = DGFE_MPD_State[add_info.fpStatus?.substring(1, 2)]
+            const cashDrawerState = cashDrawerState[add_info.fpStatus?.substring(2, 3)]
+            const receiptDocumentState = receiptDocumentState[add_info.fpStatus?.substring(3, 4)]
+            const operativeState = operativeState[add_info.fpStatus?.substring(4, 5)]
+
+            return {
+                code: status?.code,
+                success: status?.success,
+                message: status?.message,
+                printerState,
+                DGFE_MPD_State,
+                cashDrawerState,
+                receiptDocumentState,
+                operativeState
+            }
+        }
+
+        return {
+            code: status?.code,
+            success: status?.success,
+            message: status?.message
+        }
     }
 }
 
