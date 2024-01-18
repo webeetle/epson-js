@@ -3,6 +3,8 @@ import {printerState} from "./constants";
 const {ePOSBuilder, encodeBase64Binary, fiscalPrint} = require('./js/fiscalprint');
 const {XMLParser, XMLBuilder} = require('fast-xml-parser');
 
+const {DGFE_MPD_State, cashDrawerState, receiptDocumentState, operativeState} = require('./constants');
+
 class Printer {
 
     url = ""
