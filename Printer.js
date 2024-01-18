@@ -29,9 +29,9 @@ class Printer {
         this.printer.send(this.url, xmlData, 0);
     }
 
-    getPrinterStatus() {
+    getPrinterStatus(onError = null, onReceive = null) {
         const xmlData = this._getPrinterStatusXml();
-        this.sendToPrinter(xmlData);
+        this.sendToPrinter(xmlData, onError, onReceive);
     }
 
     _isValidXml(xmlData) {
@@ -55,6 +55,7 @@ class Printer {
         }
 
         const builder = new XMLBuilder(options)
+        console.log("[PRINTER] XML Stato: ", builder.build(statusObj));
         return builder.build(statusObj);
     }
 }
