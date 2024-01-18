@@ -46,11 +46,12 @@ class Printer {
 
     _getPrinterStatusXml() {
         const statusObj = {
-            "queryPrinterStatus": ""
+            printerCommand: {
+                queryPrinterStatus: ""
+            }
         }
 
         const options = {
-            arrayNodeName: "printerCommand",
             suppressEmptyNode: true
         }
 
