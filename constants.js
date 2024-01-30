@@ -47,7 +47,7 @@ const operativeState = {
     default: "Risposta errata"
 }
 
-module.exports = {
+export {
     printerState,
     DGFE_MPD_State,
     cashDrawerState,

@@ -1,17 +1,15 @@
-import {printerState} from "./constants";
-
-const {ePOSBuilder, encodeBase64Binary, fiscalPrint} = require('./js/fiscalprint');
-const {XMLParser, XMLBuilder} = require('fast-xml-parser');
-
-const {DGFE_MPD_State, cashDrawerState, receiptDocumentState, operativeState} = require('./constants');
+import {cashDrawerState, DGFE_MPD_State, operativeState, printerState, receiptDocumentState} from "./constants";
+import {fiscalPrint} from "./js/fiscalprint.js";
+import {XMLBuilder} from "fast-xml-parser";
 
 class Printer {
 
     url = ""
     printer = null
+    timeout = 10000
 
     constructor(ipAddress) {
-        this.url = `${window.location.protocol}//${ipAddress}/cgi-bin/fpmate.cgi`;
+        this.url = `${window.location.protocol}//${ipAddress}/cgi-bin/fpmate.cgi?timeout=${this.timeout}`;
         this.printer = new fiscalPrint();
     }
 
