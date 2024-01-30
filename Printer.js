@@ -6,10 +6,9 @@ class Printer {
 
     url = ""
     printer = null
-    timeout = 10000
 
     constructor(ipAddress) {
-        this.url = `${window.location.protocol}//${ipAddress}/cgi-bin/fpmate.cgi?timeout=${this.timeout}`;
+        this.url = `${window.location.protocol}//${ipAddress}/cgi-bin/fpmate.cgi`;
         this.printer = new fiscalPrint();
     }
 
