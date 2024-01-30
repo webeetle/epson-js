@@ -27,7 +27,7 @@ class Printer {
             if (onReceive) onReceive(result, tag_names_array, add_info, res_add);
         }
 
-        this.printer.send(this.url, xmlData, 0);
+        this.printer.send(this.url, xmlData, 10000);
     }
 
     getPrinterStatus(onError = null, onReceive = null) {
