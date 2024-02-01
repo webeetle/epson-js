@@ -7,8 +7,8 @@ class Printer {
     url = ""
     printer = null
 
-    constructor(ipAddress) {
-        this.url = `${window.location.protocol}//${ipAddress}/cgi-bin/fpmate.cgi`;
+    constructor(ipAddress, protocol = "http") {
+        this.url = `${protocol}//${ipAddress}/cgi-bin/fpmate.cgi`;
         this.printer = new fiscalPrint();
     }
 
